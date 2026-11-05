@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Сторис по формуле АИДА — Elite Dental Clinic</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1b2430;--mu:#6b7686;--bd:#e3e7ee;--ac:#0f766e;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151c;--card:#18202a;--tx:#e8edf3;--mu:#94a0b0;--bd:#2a3442;--ac:#2dd4bf}}
+:root[data-theme="dark"]{--bg:#10151c;--card:#18202a;--tx:#e8edf3;--mu:#94a0b0;--bd:#2a3442;--ac:#2dd4bf}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+.w{max-width:960px;margin:0 auto;padding:20px 16px 60px}
+h1{font-size:24px;margin:0 0 4px}.sub{color:var(--mu);margin:0}
+h2{font-size:15px;margin:30px 0 12px;text-transform:uppercase;letter-spacing:.05em;color:var(--mu)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chip{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:99px;padding:6px 14px;font:inherit;font-size:13px;cursor:pointer}
+.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.st{display:flex;gap:20px;flex-wrap:wrap;background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px}
+.ph{width:216px;aspect-ratio:9/16;border-radius:18px;position:relative;overflow:hidden;color:#fff;flex:none;display:flex;flex-direction:column;justify-content:space-between;padding:16px 14px;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.ph svg{position:absolute;left:50%;top:46%;width:130px;height:130px;transform:translate(-50%,-50%);opacity:.95;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.ph .tag{font-size:10px;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.ph .hl{font-size:19px;line-height:1.2;font-weight:700;position:relative}
+.ph .tx{font-size:11.5px;line-height:1.3;position:relative;opacity:.95}
+.ph .btn{background:#fff;color:#0b3b37;border-radius:99px;text-align:center;font-weight:700;font-size:12px;padding:8px;position:relative}
+.ph .lg{position:absolute;right:12px;top:12px;font-size:10px;font-weight:700;opacity:.9}
+.info{flex:1;min-width:240px}
+.info h3{margin:0 0 2px;font-size:17px}
+.meta{color:var(--mu);font-size:13px;margin-bottom:10px}
+.r{display:flex;gap:10px;margin:7px 0;font-size:14px}
+.r b{flex:none;width:26px;height:26px;border-radius:7px;background:var(--ac);color:#fff;display:grid;place-items:center;font-size:13px}
+.r span small{display:block;color:var(--mu);font-size:11px;text-transform:uppercase}
+.stk{margin-top:8px;font-size:13px;color:var(--mu)}
+.st{flex-direction:column;gap:6px}
+.row{display:flex;gap:12px;overflow-x:auto;padding:6px 2px 10px}
+.fr{flex:none;width:176px}
+.row .ph{width:176px;justify-content:flex-end;padding:14px 12px 16px}
+.row .lg{left:12px;right:auto;font-size:9px}
+.row .hl{font-size:13.5px;font-weight:600;line-height:1.3}
+.row .k0 .hl{font-size:18px;font-weight:700}
+.row .k0 svg{top:34%;width:110px;height:110px}
+.row .k1 svg,.row .k2 svg,.row .k3 svg{top:27%;width:76px;height:76px}
+.row .btn{margin-top:12px}
+.cap{font-size:12px;color:var(--mu);margin-top:8px;text-align:center}
+.cap b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;background:var(--ac);color:#fff;font-size:11px}
+</style>
+</head>
+<body>
+<div class="w">
+<h1>Сторис на месяц по формуле АИДА</h1>
+<p class="sub">Elite Dental Clinic · 3 темы в неделю (Пн, Ср, Пт) · каждая тема = 4 сторис подряд: А → И → Д → Д · всего 48 кадров 9:16</p>
+<div class="chips" id="chips"></div>
+<h2 id="wh"></h2>
+<div id="list"></div>
+<p class="sub" style="font-size:12px;margin-top:24px">А — внимание, И — интерес, Д — желание, Д — действие. Тексты нужно согласовать с врачом; фото пациентов — только с письменного согласия. Не обещайте гарантий результата.</p>
+</div>
+<script>
+var I={
+check:'<circle cx="50" cy="50" r="36"/><path d="M33 51l12 12 23-26"/>',
+chat:'<path d="M14 22h72v44H44L28 82V66H14z"/>',
+tooth:'<path d="M30 25c8-8 15-2 20-2s12-6 20 2c8 10 0 25-4 40-2 10-5 18-9 18-5 0-4-18-7-18s-2 18-7 18c-4 0-7-8-9-18-4-15-12-30-4-40z"/>',
+scan:'<circle cx="50" cy="50" r="32"/><path d="M50 8v14M50 78v14M8 50h14M78 50h14"/><path d="M38 42c4-5 8-1 12-1s8-4 12 1c3 6-3 14-4 22-1 4-4 4-4 0s-1-8-4-8-3 8-4 8-3 0-4-4c-1-8-7-12-4-18z"/>',
+lens:'<circle cx="42" cy="42" r="24"/><circle cx="42" cy="42" r="10"/><path d="M60 60l26 26"/>',
+aligner:'<path d="M12 62c0-34 76-34 76 0"/><path d="M22 60v14h12V56M44 54v20h12V54M66 56v18h12V60"/>',
+implant:'<path d="M36 14h28l-3 18H39zM42 38h16M42 48h16M44 58h12M46 68h8M50 76v10"/>',
+jaw:'<path d="M14 30c0 44 72 44 72 0"/><path d="M26 38c5 24 43 24 48 0"/><path d="M50 18v12"/>',
+spark:'<path d="M50 10l9 31 31 9-31 9-9 31-9-31-31-9 31-9z"/>',
+drop:'<path d="M50 12c15 21 25 31 25 48a25 25 0 0 1-50 0c0-17 10-27 25-48z"/>',
+smile:'<circle cx="50" cy="50" r="36"/><circle cx="38" cy="42" r="3"/><circle cx="62" cy="42" r="3"/><path d="M33 58c8 13 26 13 34 0"/>',
+gear:'<circle cx="50" cy="50" r="16"/><circle cx="50" cy="50" r="34" stroke-dasharray="12 9"/>'
+};
+var S=[
+[1,"Пн","Диагностика","scan",190,"Зуб не болит — значит, всё хорошо?","Скрытый кариес и воспаление часто видны только на 3D-снимке (КЛКТ).","Вы заранее узнаете точную картину и получите понятный план лечения без сюрпризов.","Запишитесь на 3D-диагностику — напишите нам в Direct.","Опрос: «Когда вы в последний раз делали снимок?»"],
+[1,"Ср","Терапия","lens",175,"Вот как выглядит зуб под микроскопом","Врач видит каналы и мелкие детали, которые не разглядеть невооружённым глазом.","Больше шансов сохранить собственный зуб и качественно пролечить сложные каналы.","Нажмите «Написать» — подберём время приёма.","Видео 5–7 секунд работы под микроскопом"],
+[1,"Пт","Ортодонтия","smile",265,"Правильно ли смыкаются ваши зубы?","Неправильный прикус влияет на жевание, нагрузку на суставы и стабильность улыбки.","Ровная улыбка и комфортное жевание — результат правильной диагностики прикуса.","Ответьте на опрос и запишитесь к ортодонту на консультацию.","Стикер «Опрос»: да / не уверен(а)"],
+[2,"Пн","Elite Aligners","aligner",320,"Выровнять зубы так, чтобы никто не заметил","Elite Aligners — прозрачные съёмные элайнеры из корейского материала Graphy, изготавливаются в клинике.","Удобно есть и чистить зубы, а цифровой план покажет путь движения зубов.","Запишитесь на консультацию — врач скажет, подходят ли элайнеры вам.","Стикер «Вопрос»: «Что хотите узнать об элайнерах?»"],
+[2,"Ср","Имплантация","implant",20,"Потеряли зуб? Не откладывайте","Имплантация по 3D-плану и хирургическому шаблону — положение имплантата планируется заранее.","Высокая точность установки и, в подходящих случаях, менее травматичное вмешательство.","Узнайте, подходит ли вам метод, — напишите нам.","Фото шаблона или экрана 3D-планирования"],
+[2,"Пт","Гнатология","jaw",350,"Хрустит или щёлкает челюсть при открывании рта?","Щелчки, боль, напряжение мышц и скрежет зубами — повод обратиться к гнатологу.","Свободное открывание рта без напряжения и дискомфорта после лечения.","Запишитесь на консультацию гнатолога в Direct.","Стикер «Да/Нет»: «Бывает хруст в челюсти?»"],
+[3,"Пн","Эстетика","spark",200,"Белые пятна на зубах после брекетов?","Технология ICON по показаниям уменьшает заметность белых пятен и лечит начальный кариес без бормашины.","Аккуратная улыбка с сохранением здоровой ткани зуба.","Спросите врача, подходит ли метод вам, — запись в Direct.","Фото «до/после» с согласия пациента"],
+[3,"Ср","Детская ортодонтия","smile",160,"Когда вести ребёнка к ортодонту?","Ранняя диагностика помогает вовремя заметить нарушения прикуса и контролировать развитие челюстей.","Меньше шансов столкнуться со сложным лечением в подростковом возрасте.","Запишите ребёнка на консультацию ортодонта.","Опрос для мам: «Сколько лет вашему ребёнку?»"],
+[3,"Пт","Пародонтология","drop",5,"Кровоточат дёсна при чистке зубов?","Это может быть признаком воспаления. Дёсны лечат пародонтологи, в том числе с аппаратом Vector.","Здоровые дёсна — основа для имплантации, протезирования и ортодонтии.","Запишитесь на диагностику дёсен.","Стикер «Вопрос»: «Беспокоят дёсна?»"],
+[4,"Пн","Лаборатория","gear",45,"Где делают ваши коронки?","В Elite Dental Clinic есть собственная зуботехническая лаборатория и CAD/CAM-технологии.","Форма, цвет и анатомия зубов подбираются индивидуально, а врач работает рядом с техником.","Запишитесь на консультацию по протезированию.","Короткое видео из лаборатории"],
+[4,"Ср","Отбеливание","spark",215,"Улыбка на тон светлее","Отбеливание системой Opalescence — одна из услуг клиники.","Свежая и яркая улыбка перед важным событием.","Уточните у врача, подходит ли вам процедура, — напишите нам.","Стикер «Таймер»: до конца акции или записи"],
+[4,"Пт","Клиника","tooth",180,"Одна клиника — все этапы лечения","Диагностика, терапия, ортодонтия, имплантация, протезирование и пародонтология — рядом.","Не нужно ходить по разным клиникам: врачи видят общую картину вашего лечения.","Запишитесь на первичную консультацию в Direct.","Ссылка на запись или кнопка «Написать»"]
+];
+var wk=0;
+function esc(s){return s}
+function render(){
+var h="";
+S.forEach(function(s){if(wk&&s[0]!=wk)return;
+h+='<div class="st"><div class="ph" style="background:linear-gradient(165deg,hsl('+s[4]+' 55% 38%),hsl('+(s[4]+35)+' 60% 20%))"><div class="lg">ELITE DENTAL</div><div><div class="tag">'+s[2]+'</div><div class="hl">'+s[5]+'</div></div><svg viewBox="0 0 100 100">'+I[s[3]]+'</svg><div><div class="tx">'+s[6]+'</div><div class="btn" style="margin-top:10px">Записаться</div></div></div>'
++'<div class="info"><h3>'+s[2]+'</h3><div class="meta">Неделя '+s[0]+', '+s[1]+'</div>'
++row("А","Внимание",s[5])+row("И","Интерес",s[6])+row("Д","Желание",s[7])+row("Д","Действие",s[8])
++'<div class="stk">Оформление: '+s[9]+'</div></div></div>'});
+document.getElementById("list").innerHTML=h;
+document.getElementById("wh").textContent=wk?"Неделя "+wk:"Все 12 сторис";
+var c='<button class="chip'+(wk?'':' on')+'" data-w="0">Все</button>';
+for(var i=1;i<5;i++)c+='<button class="chip'+(wk==i?' on':'')+'" data-w="'+i+'">Неделя '+i+'</button>';
+var e=document.getElementById("chips");e.innerHTML=c;
+e.querySelectorAll(".chip").forEach(function(b){b.onclick=function(){wk=+b.dataset.w;render()}});
+}
+function render(){
+var h="",L=[["А","Внимание"],["И","Интерес"],["Д","Желание"],["Д","Действие"]];
+S.forEach(function(s){if(wk&&s[0]!=wk)return;
+var t=[s[5],s[6],s[7],s[8]],ico=[s[3],s[3],"check","chat"];
+h+='<div class="st"><div><h3>'+s[2]+'</h3><div class="meta">Неделя '+s[0]+', '+s[1]+' · 4 сторис подряд</div></div><div class="row">';
+for(var k=0;k<4;k++){var hue=s[4]+k*12;
+h+='<div class="fr"><div class="ph k'+k+'" style="background:linear-gradient(165deg,hsl('+hue+' 55% 38%),hsl('+(hue+35)+' 60% 20%))"><div class="lg">'+(k+1)+'/4 · ELITE DENTAL</div><svg viewBox="0 0 100 100">'+I[ico[k]]+'</svg><div class="hl">'+t[k]+'</div>'+(k==3?'<div class="btn">Записаться</div>':'')+'</div><div class="cap"><b>'+L[k][0]+'</b> '+L[k][1]+'</div></div>'}
+h+='</div><div class="stk">Оформление: '+s[9]+'</div></div>'});
+document.getElementById("list").innerHTML=h;
+document.getElementById("wh").textContent=wk?"Неделя "+wk+" · "+(S.filter(function(s){return s[0]==wk}).length*4)+" сторис":"Все 48 сторис";
+var c='<button class="chip'+(wk?'':' on')+'" data-w="0">Все</button>';
+for(var i=1;i<5;i++)c+='<button class="chip'+(wk==i?' on':'')+'" data-w="'+i+'">Неделя '+i+'</button>';
+var e=document.getElementById("chips");e.innerHTML=c;
+e.querySelectorAll(".chip").forEach(function(b){b.onclick=function(){wk=+b.dataset.w;render()}});
+}
+function row(l,t,x){return '<div class="r"><b>'+l+'</b><span><small>'+t+'</small>'+x+'</span></div>'}
+render();
+</script>
+</body>
+</html>
